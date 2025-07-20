@@ -124,11 +124,6 @@ function setupSocketListeners(socket) {
 
 // 添加新服务器
 function addServer(name, address) {
-  // 验证地址格式
-  if (!address.startsWith("http://") && !address.startsWith("https://")) {
-    address = "http://" + address;
-  }
-
   const newServer = {
     name,
     address: address.replace(/\/$/, ""), // 移除末尾的斜杠
