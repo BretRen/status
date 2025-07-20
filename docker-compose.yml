@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  status-monitor:
+    build: .
+    container_name: status-monitor
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./data:/app/data # 持久化数据
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
