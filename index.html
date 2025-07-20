@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>服务器状态面板</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="header-bar">
+        <h1>服务器状态面板</h1>
+        <div class="dropdown">
+            <button class="dropdown-toggle">
+                <span id="current-server-name">选择服务器</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" fill="none" />
+                </svg>
+            </button>
+            <div class="dropdown-menu" id="server-list">
+                <!-- 服务器列表将在这里动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 默认显示无服务器状态 -->
+        <div class="no-server" id="no-server-message">
+            <h2>无服务器</h2>
+            <p>请先添加服务器</p>
+        </div>
+
+        <!-- 服务器状态卡片 (初始隐藏) -->
+        <div id="server-status" style="display: none;">
+            <!-- 第一行卡片 -->
+            <div class="card-row">
+                <!-- 内存卡片 -->
+                <div class="card">
+                    <h2>内存使用率</h2>
+                    <div class="value" id="mem-used">0%</div>
+                    <div class="progress-bar">
+                        <div id="mem-progress" class="progress"></div>
+                    </div>
+                    <div class="small-text" id="mem-details">0 / 0 GB</div>
+                </div>
+
+                <!-- CPU 总负载卡片 -->
+                <div class="card">
+                    <h2>CPU 总负载</h2>
+                    <div class="value" id="cpu-load">0%</div>
+                    <div class="progress-bar">
+                        <div id="cpu-progress" class="progress"></div>
+                    </div>
+                    <div class="small-text" id="cpu-details">每核CPU平均使用率</div>
+                </div>
+            </div>
+
+            <!-- 第二行卡片 -->
+            <div class="card-row">
+                <!-- 系统负载平均卡片 -->
+                <div class="card">
+                    <h2>系统负载平均</h2>
+                    <div class="small-text" id="loadavg-values">1min: 0, 5min: 0, 15min: 0</div>
+                </div>
+
+                <!-- 系统运行时间卡片 -->
+                <div class="card">
+                    <h2>系统运行时间</h2>
+                    <div class="small-text" id="uptime-value">加载中...</div>
+                </div>
+            </div>
+
+            <!-- 每核CPU使用率卡片 -->
+            <div class="card cpu-cores-card">
+                <h2>每核CPU使用率</h2>
+                <div id="cpu-cores" class="cpu-grid">
+                    <!-- 动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 悬浮按钮 -->
+    <div class="floating-btn" id="openModal">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="12" fill="#00bcd4" />
+            <line x1="12" y1="6" x2="12" y2="18" stroke="white" stroke-width="2" />
+            <line x1="6" y1="12" x2="18" y2="12" stroke="white" stroke-width="2" />
+        </svg>
+    </div>
+
+    <!-- 添加服务器弹窗 -->
+    <div class="modal" id="addServerModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2>添加服务器</h2>
+            <input type="text" id="server-name" placeholder="服务器名称" />
+            <input type="text" id="server-address" placeholder="IP地址或域名 (如: http://localhost:3001)" />
+            <button class="submit-btn" id="add-server-btn">添加</button>
+        </div>
+    </div>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
